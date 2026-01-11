@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Varshika's Blog</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-animation"></div>
+    <header>
+      <nav>
+        <div class="logo">Varshika's Blog</div>
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#blogs">Blogs</a>
+          <a href="editor.html" class="btn-editor">✏️ Write</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Welcome to <span>My Blog</span></h1>
+        <p>Stories, insights, and ideas that inspire</p>
+      </section>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Search blogs..." />
+      </div>
+      <div class="categories" id="categoriesContainer">
+        <button class="category-btn active" data-category="all">All</button>
+      </div>
+      <section class="blog-section" id="blogs">
+        <div class="blog-grid" id="blogGrid"></div>
+      </section>
+    </main>
+    <div class="modal-overlay" id="blogModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <img class="modal-image" id="modalImage" src="" alt="" />
+        <div class="modal-body">
+          <span class="modal-category" id="modalCategory"></span>
+          <h1 class="modal-title" id="modalTitle"></h1>
+          <div class="modal-meta" id="modalMeta"></div>
+          <div class="modal-text" id="modalContent"></div>
+        </div>
+      </div>
+    </div>
+    <footer><p>© 2026 Varshika's Blog 💜</p></footer>
+    <script src="script.js"></script>
+  </body>
+</html>

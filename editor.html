@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Editor | Varshika's Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --primary-light: #818cf8; --accent: #f472b6; --bg-dark: #0f0f23; --bg-card: #1a1a2e; --text-primary: #f8fafc; --text-secondary: #94a3b8; --border: rgba(99, 102, 241, 0.2); --gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899); --success: #10b981; --error: #ef4444; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; }
+        .bg-animation { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 20% 80%, rgba(99,102,241,0.1), transparent 50%), radial-gradient(circle at 80% 20%, rgba(168,85,247,0.1), transparent 50%); }
+        header { padding: 1.5rem 2rem; background: rgba(15,15,35,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-btn { padding: 0.7rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .back-btn:hover { border-color: var(--primary); color: var(--text-primary); }
+        main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 0.5rem; text-align: center; }
+        h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 3rem; }
+        .editor-form { background: var(--bg-card); border-radius: 24px; padding: 2.5rem; border: 1px solid var(--border); }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 1rem 1.25rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-family: inherit; font-size: 1rem; transition: 0.3s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 20px rgba(99,102,241,0.15); }
+        textarea { min-height: 300px; resize: vertical; line-height: 1.6; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .toolbar button { padding: 0.5rem 0.75rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
+        .toolbar button:hover { border-color: var(--primary); color: var(--primary-light); }
+        .btn-submit { width: 100%; padding: 1.25rem; background: var(--gradient); border: none; border-radius: 12px; color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99,102,241,0.3); }
+        .preview-section { margin-top: 3rem; }
+        .preview-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        .preview-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
+        .preview-image { width: 100%; height: 250px; object-fit: cover; background: var(--bg-dark); display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+        .preview-content { padding: 2rem; }
+        .preview-content h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
+        .preview-meta { display: flex; gap: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem; }
+        .preview-text { color: var(--text-secondary); line-height: 1.8; }
+        .preview-text h2 { font-size: 1.3rem; margin: 1.5rem 0 0.75rem; color: var(--text-primary); }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; border-radius: 12px; color: white; font-weight: 500; transform: translateY(100px); opacity: 0; transition: 0.3s; z-index: 1000; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+        .json-output { margin-top: 2rem; }
+        .json-output h3 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .json-code { background: var(--bg-dark); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; font-family: monospace; font-size: 0.85rem; color: var(--primary-light); overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; }
+        .copy-btn { margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: 0.3s; }
+        .copy-btn:hover { border-color: var(--primary); color: var(--primary-light); }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } main { padding: 2rem 1rem; } .editor-form { padding: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Varshika's Blog</a>
+            <a href="index.html" class="back-btn">← Back to Blogs</a>
+        </nav>
+    </header>
+    <main>
+        <h1>✍️ <span>Blog Editor</span></h1>
+        <p class="subtitle">Create beautiful blog posts in seconds</p>
+        <div class="editor-form">
+            <div class="form-group">
+                <label>Blog Title *</label>
+                <input type="text" id="title" placeholder="Enter an engaging title...">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Author Name *</label>
+                    <input type="text" id="author" placeholder="Your name" value="Varshika">
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="category">
+                        <option value="Technology">Technology</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Food">Food</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Cover Image URL</label>
+                    <input type="url" id="image" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Read Time</label>
+                    <input type="text" id="readTime" placeholder="5 min read" value="5 min read">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Short Excerpt *</label>
+                <input type="text" id="excerpt" placeholder="A brief summary of your blog post...">
+            </div>
+            <div class="form-group">
+                <label>Blog Content (HTML supported) *</label>
+                <div class="toolbar">
+                    <button type="button" onclick="insertTag('h2')">H2</button>
+                    <button type="button" onclick="insertTag('p')">Paragraph</button>
+                    <button type="button" onclick="insertTag('strong')">Bold</button>
+                    <button type="button" onclick="insertTag('em')">Italic</button>
+                    <button type="button" onclick="insertTag('ul')">List</button>
+                    <button type="button" onclick="insertTag('blockquote')">Quote</button>
+                </div>
+                <textarea id="content" placeholder="<p>Start writing your amazing blog post here...</p>"></textarea>
+            </div>
+            <button class="btn-submit" onclick="generateBlog()">🚀 Generate Blog JSON</button>
+        </div>
+        <div class="preview-section">
+            <h2 class="preview-title">👁️ Live Preview</h2>
+            <div class="preview-card">
+                <div class="preview-image" id="previewImage">Image Preview</div>
+                <div class="preview-content">
+                    <h2 id="previewTitle">Your blog title will appear here</h2>
+                    <div class="preview-meta" id="previewMeta">
+                        <span>👤 Author</span><span>📅 Date</span><span>⏱️ Read Time</span>
+                    </div>
+                    <p id="previewExcerpt" style="color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">Your excerpt...</p>
+                    <div class="preview-text" id="previewContent">Content preview...</div>
+                </div>
+            </div>
+        </div>
+        <div class="json-output" id="jsonOutput" style="display: none;">
+            <h3>📋 Generated JSON (Copy and add to blogs.json)</h3>
+            <div class="json-code" id="jsonCode"></div>
+            <button class="copy-btn" onclick="copyJSON()">📋 Copy JSON</button>
+        </div>
+    </main>
+    <div class="toast" id="toast"></div>
+    <script>
+        const fields = ['title', 'author', 'category', 'image', 'readTime', 'excerpt', 'content'];
+        fields.forEach(f => document.getElementById(f).addEventListener('input', updatePreview));
+        function updatePreview() {
+            const title = document.getElementById('title').value || 'Your blog title';
+            const author = document.getElementById('author').value || 'Author';
+            const readTime = document.getElementById('readTime').value || '5 min read';
+            const excerpt = document.getElementById('excerpt').value || 'Your excerpt...';
+            const content = document.getElementById('content').value || 'Content preview...';
+            const image = document.getElementById('image').value;
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewMeta').innerHTML = `<span>👤 ${author}</span><span>📅 ${new Date().toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'})}</span><span>⏱️ ${readTime}</span>`;
+            document.getElementById('previewExcerpt').textContent = excerpt;
+            document.getElementById('previewContent').innerHTML = content;
+            if (image) {
+                document.getElementById('previewImage').innerHTML = `<img src="${image}" style="width:100%;height:250px;object-fit:cover;" onerror="this.parentElement.textContent='Image not found'">`;
+            }
+        }
+        function insertTag(tag) {
+            const textarea = document.getElementById('content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end);
+            let insert = '';
+            if (tag === 'ul') insert = `<ul>\n  <li>${selected || 'List item'}</li>\n</ul>`;
+            else insert = `<${tag}>${selected || 'Your text here'}</${tag}>`;
+            textarea.value = textarea.value.substring(0, start) + insert + textarea.value.substring(end);
+            textarea.focus();
+            updatePreview();
+        }
+        function generateBlog() {
+            const title = document.getElementById('title').value.trim();
+            const author = document.getElementById('author').value.trim();
+            const category = document.getElementById('category').value;
+            const image = document.getElementById('image').value.trim() || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800';
+            const readTime = document.getElementById('readTime').value.trim() || '5 min read';
+            const excerpt = document.getElementById('excerpt').value.trim();
+            const content = document.getElementById('content').value.trim();
+            if (!title || !author || !excerpt || !content) { showToast('Please fill all required fields!', 'error'); return; }
+            const blog = {
+                id: Date.now(),
+                title, excerpt, content, author,
+                date: new Date().toISOString().split('T')[0],
+                category, image, readTime
+            };
+            const jsonStr = JSON.stringify(blog, null, 2);
+            document.getElementById('jsonCode').textContent = jsonStr;
+            document.getElementById('jsonOutput').style.display = 'block';
+            document.getElementById('jsonOutput').scrollIntoView({ behavior: 'smooth' });
+            showToast('Blog JSON generated! Copy and add to blogs.json', 'success');
+        }
+        function copyJSON() {
+            navigator.clipboard.writeText(document.getElementById('jsonCode').textContent);
+            showToast('JSON copied to clipboard!', 'success');
+        }
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        updatePreview();
+    </script>
+</body>
+</html>
