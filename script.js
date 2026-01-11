@@ -1,34 +1,28 @@
 let allBlogs = [];
 let currentCategory = "all";
 
-// Category icons and colors
+// Category config for styling
 const categoryConfig = {
-  "IITM BS": { icon: "🎓", class: "iitm" },
-  Technology: { icon: "💻", class: "tech" },
-  Lifestyle: { icon: "🌟", class: "life" },
-  default: { icon: "📝", class: "" },
+  "IITM BS": { class: "tag-iitm" },
+  "Technology": { class: "tag-tech" },
+  "Lifestyle": { class: "tag-life" },
+  "default": { class: "tag-tech" } // Fallback
 };
 
 async function fetchBlogs() {
   try {
     const response = await fetch("blogs.json");
+    if (!response.ok) throw new Error("Failed to load");
     allBlogs = await response.json();
-
-    // Update blog count in hero
-    const countEl = document.getElementById("blogCount");
-    if (countEl) {
-      countEl.textContent = `${allBlogs.length}+`;
-    }
-
+    
     generateCategories();
     renderBlogs(allBlogs);
   } catch (error) {
     console.error("Error loading blogs:", error);
     document.getElementById("blogGrid").innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📝</div>
-        <h3 class="empty-state-title">No blogs yet</h3>
-        <p class="empty-state-text">Start writing your first blog post!</p>
+      <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-dim);">
+        <h2>Unable to load stories 😔</h2>
+        <p>Please try again later.</p>
       </div>
     `;
   }
@@ -37,13 +31,15 @@ async function fetchBlogs() {
 function generateCategories() {
   const categories = [...new Set(allBlogs.map((b) => b.category))];
   const container = document.getElementById("categoriesContainer");
-
+  
+  // Clear existing buttons except "All"
+  container.innerHTML = '<button class="pill active" data-category="all">All Stories</button>';
+  
   categories.forEach((cat) => {
-    const config = categoryConfig[cat] || categoryConfig.default;
     const btn = document.createElement("button");
-    btn.className = "category-btn";
+    btn.className = "pill";
     btn.dataset.category = cat;
-    btn.innerHTML = `${config.icon} ${cat}`;
+    btn.textContent = cat;
     btn.onclick = () => filterByCategory(cat);
     container.appendChild(btn);
   });
@@ -51,97 +47,79 @@ function generateCategories() {
 
 function filterByCategory(category) {
   currentCategory = category;
-
-  document.querySelectorAll(".category-btn").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.category === category);
+  
+  // Update active state of pills
+  document.querySelectorAll(".pill").forEach((btn) => {
+    if (btn.dataset.category === category) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
   });
-
-  filterBlogs(document.getElementById("searchInput").value.toLowerCase());
-}
-
-function filterBlogs(search) {
+  
+  const searchInput = document.getElementById("searchInput").value.toLowerCase();
+  
   let filtered =
     currentCategory === "all"
       ? allBlogs
       : allBlogs.filter((b) => b.category === currentCategory);
-
-  if (search) {
+  
+  if (searchInput) {
     filtered = filtered.filter(
       (b) =>
-        b.title.toLowerCase().includes(search) ||
-        b.excerpt.toLowerCase().includes(search) ||
-        b.category.toLowerCase().includes(search)
+        b.title.toLowerCase().includes(searchInput) ||
+        b.excerpt.toLowerCase().includes(searchInput)
     );
   }
-
+  
   renderBlogs(filtered);
 }
 
 function renderBlogs(blogs) {
   const grid = document.getElementById("blogGrid");
-
+  
   if (!blogs.length) {
     grid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">🔍</div>
-        <h3 class="empty-state-title">No blogs found</h3>
-        <p class="empty-state-text">Try adjusting your search or filters</p>
+      <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-dim);">
+        <h3>No matches found 🔍</h3>
+        <p>Try searching for something else.</p>
       </div>
     `;
     return;
   }
-
+  
   grid.innerHTML = blogs
     .map((b, index) => {
       const config = categoryConfig[b.category] || categoryConfig.default;
-      const featured = b.featured
-        ? `<span class="featured-badge">⭐ Featured</span>`
-        : "";
-
+      const isFeatured = b.featured === true; // Check if featured
+      
       return `
-        <article class="blog-card" onclick="openModal(${
-          b.id
-        })" style="animation-delay: ${index * 0.1}s">
-          <div class="image-container">
-            <span class="blog-category ${config.class}">${config.icon} ${
-        b.category
-      }</span>
-            ${featured}
-            <img src="${b.image}" alt="${
-        b.title
-      }" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=800&q=80'">
-          </div>
-          <div class="blog-content">
-            <div class="blog-meta">
-              <span>👤 ${b.author}</span>
-              <span>📅 ${formatDate(b.date)}</span>
-              <span>⏱️ ${b.readTime}</span>
+        <article class="blog-card ${isFeatured ? 'featured' : ''}" onclick="openModal(${b.id})" style="animation: fadeUp 0.6s ease ${index * 0.1}s backwards;">
+            <div class="category-tag ${config.class}">${b.category}</div>
+            
+            <div class="card-image-wrapper">
+                <img src="${b.image}" alt="${b.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80'">
             </div>
-            <h2 class="blog-title">${b.title}</h2>
-            <p class="blog-excerpt">${b.excerpt}</p>
-            <span class="read-more">Read More</span>
-          </div>
+            
+            <div class="card-content">
+                <div class="card-meta">
+                    <span>${formatDate(b.date)} • ${b.readTime}</span>
+                </div>
+                <h3 class="card-title">${b.title}</h3>
+                <p class="card-excerpt">${b.excerpt}</p>
+                <div class="read-more-link">
+                    <span>➞</span> Read Story
+                </div>
+            </div>
         </article>
       `;
     })
     .join("");
-
-  // Add staggered animation
-  const cards = grid.querySelectorAll(".blog-card");
-  cards.forEach((card, i) => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(30px)";
-    setTimeout(() => {
-      card.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
-      card.style.opacity = "1";
-      card.style.transform = "translateY(0)";
-    }, i * 100);
-  });
 }
 
 function formatDate(d) {
   return new Date(d).toLocaleDateString("en-US", {
-    month: "short",
+    month: "long",
     day: "numeric",
     year: "numeric",
   });
@@ -150,92 +128,69 @@ function formatDate(d) {
 function openModal(id) {
   const b = allBlogs.find((x) => x.id === id);
   if (!b) return;
-
+  
   const config = categoryConfig[b.category] || categoryConfig.default;
-
+  
   document.getElementById("modalImage").src = b.image;
-  document.getElementById("modalImage").alt = b.title;
-  document.getElementById(
-    "modalCategory"
-  ).innerHTML = `${config.icon} ${b.category}`;
+  // Reset scroll position
+  document.querySelector(".modal-window").scrollTop = 0;
+  
+  // Update category style
+  const catEl = document.getElementById("modalCategory");
+  catEl.textContent = b.category;
+  catEl.className = `category-tag ${config.class}`;
+  catEl.style.position = 'relative';
+  catEl.style.top = '0';
+  catEl.style.left = '0';
+  catEl.style.display = 'inline-block';
+  catEl.style.marginBottom = '1rem';
+
   document.getElementById("modalTitle").textContent = b.title;
   document.getElementById("modalMeta").innerHTML = `
-    <span>👤 ${b.author}</span>
-    <span>📅 ${formatDate(b.date)}</span>
-    <span>⏱️ ${b.readTime}</span>
+    <span>Written by <strong>${b.author}</strong></span>
+    <span>•</span>
+    <span>${formatDate(b.date)}</span>
+    <span>•</span>
+    <span>${b.readTime}</span>
   `;
   document.getElementById("modalContent").innerHTML = b.content;
-  document.getElementById("blogModal").classList.add("active");
+  
+  const backdrop = document.getElementById("blogModal");
+  backdrop.classList.add("active");
   document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
-  document.getElementById("blogModal").classList.remove("active");
+  const backdrop = document.getElementById("blogModal");
+  backdrop.classList.remove("active");
   document.body.style.overflow = "";
 }
 
-// Event Listeners
+// Close on backdrop click
 document.getElementById("blogModal").addEventListener("click", (e) => {
   if (e.target.id === "blogModal") closeModal();
 });
 
+// Close on Escape key
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-document
-  .getElementById("searchInput")
-  .addEventListener("input", (e) => filterBlogs(e.target.value.toLowerCase()));
+// Search Listener
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  // Use a tiny debounce for better performance if needed, but not strictly necessary for small lists
+  filterByCategory(currentCategory); 
+});
 
 // Header scroll effect
-let lastScroll = 0;
 window.addEventListener("scroll", () => {
-  const header = document.getElementById("header");
-  const currentScroll = window.pageYOffset;
-
-  if (currentScroll > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
-
-  lastScroll = currentScroll;
-});
-
-// Parallax effect for particles
-document.addEventListener("mousemove", (e) => {
-  const particles = document.querySelectorAll(".particle");
-  const x = e.clientX / window.innerWidth;
-  const y = e.clientY / window.innerHeight;
-
-  particles.forEach((p, i) => {
-    const speed = (i + 1) * 0.3;
-    p.style.transform = `translate(${x * speed * 20}px, ${y * speed * 20}px)`;
-  });
-});
-
-// Initialize
-fetchBlogs();
-
-// Add smooth reveal on scroll
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
+    const header = document.getElementById("header");
+    if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
     }
-  });
-}, observerOptions);
-
-// Observe elements after DOM loads
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelectorAll(".blog-card, .hero, .search-container")
-    .forEach((el) => {
-      observer.observe(el);
-    });
 });
+
+// Initial Load
+fetchBlogs();

@@ -3,124 +3,119 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Varshika's Blog - IITM BS Journey, Tech Insights, and Life Stories. Discover tips for IITM BS students, programming tutorials, and inspiring life experiences."
-    />
-    <meta
-      name="keywords"
-      content="IITM BS, IIT Madras, online degree, data science, programming, student life, tech blog"
-    />
-    <meta name="author" content="Varshika" />
-    <title>Varshika's Blog | IITM BS Journey & Tech Insights</title>
+    <meta name="description" content="Varshika's Blog - A premium destination for IITM BS stories and tech insights." />
+    <title>Varshika's Blog | Review & Insights</title>
+    
+    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet" />
+    
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="bg-animation"></div>
-    <div class="particles">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-    </div>
+    <!-- Cinematic Background Elements -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="noise-overlay"></div>
 
     <header id="header">
       <nav>
-        <div class="logo">Varshika's Blog</div>
+        <a href="#" class="logo">Varshika.</a>
         <div class="nav-links">
-          <a href="#">Home</a>
-          <a href="#blogs">Blogs</a>
-          <a href="#about">About</a>
-          <a href="editor.html" class="btn-editor">✏️ Write</a>
+          <a href="#" class="nav-link">Home</a>
+          <a href="#blogs" class="nav-link">Stories</a>
+          <a href="#" class="nav-link">About</a>
+          <a href="editor.html" class="btn-pill">
+            <span>✏️</span> Create Post
+          </a>
         </div>
       </nav>
     </header>
 
     <main>
       <section class="hero">
-        <div class="hero-badge">
-          <span>🎓</span> IITM BS Student | Tech Enthusiast | Blogger
-        </div>
-        <h1>Welcome to <span>My Blog</span></h1>
+        <div class="hero-tag">✨ Redefining the Student Blog Experience</div>
+        <h1>
+          <span>Stories driven by</span>
+          <span class="gradient-text">Passion & Code.</span>
+        </h1>
         <p>
-          Sharing my journey through IIT Madras BS program, tech explorations,
-          and life experiences. Let's learn and grow together!
+          Dive into a curated collection of experiences from the IIT Madras BS Data Science journey, 
+          technology deep-dives, and life lessons.
         </p>
-        <div class="hero-stats">
-          <div class="stat">
-            <div class="stat-value" id="blogCount">10+</div>
-            <div class="stat-label">Blog Posts</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value">500+</div>
-            <div class="stat-label">Readers</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value">IITM</div>
-            <div class="stat-label">BS Journey</div>
-          </div>
+
+        <div class="controls-container">
+            <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search for topics, tutorials, or stories..." />
+            </div>
+            
+            <div class="category-pills" id="categoriesContainer">
+                <button class="pill active" data-category="all">All Stories</button>
+                <!-- Categories injected by JS -->
+            </div>
         </div>
       </section>
 
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search blogs..." />
-      </div>
-
-      <div class="categories" id="categoriesContainer">
-        <button class="category-btn active" data-category="all">✨ All</button>
-      </div>
-
       <section class="blog-section" id="blogs">
         <div class="blog-grid" id="blogGrid">
-          <div class="loading">
-            <div class="loading-spinner"></div>
-          </div>
+            <!-- Blog cards injected by JS -->
         </div>
       </section>
     </main>
 
-    <div class="modal-overlay" id="blogModal">
-      <button class="modal-close" onclick="closeModal()">×</button>
-      <div class="modal-content">
-        <img class="modal-image" id="modalImage" src="" alt="" />
-        <div class="modal-body">
-          <span class="modal-category" id="modalCategory"></span>
-          <h1 class="modal-title" id="modalTitle"></h1>
-          <div class="modal-meta" id="modalMeta"></div>
-          <div class="modal-text" id="modalContent"></div>
+    <!-- Modal 2.0 -->
+    <div class="modal-backdrop" id="blogModal">
+      <div class="modal-window">
+        <div class="modal-close" onclick="closeModal()">✕</div>
+        <div class="modal-hero">
+            <img id="modalImage" src="" alt="">
+        </div>
+        <div class="modal-header">
+            <div class="category-tag tag-iitm" id="modalCategory" style="position:relative; top:0; left:0; display:inline-block; margin-bottom:1rem;">Category</div>
+            <h1 class="modal-title" id="modalTitle">Blog Title</h1>
+            <div class="modal-info" id="modalMeta">
+                <!-- Meta data -->
+            </div>
+        </div>
+        <div class="modal-body" id="modalContent">
+            <!-- Content -->
         </div>
       </div>
     </div>
 
-    <footer id="about">
-      <div class="footer-content">
-        <div class="footer-logo">Varshika's Blog</div>
-        <p class="footer-tagline">
-          Documenting my journey through IITM BS, one blog at a time 📝
-        </p>
-        <div class="footer-links">
-          <a href="#">Home</a>
-          <a href="#blogs">Blogs</a>
-          <a href="editor.html">Write</a>
-        </div>
-        <p class="footer-copyright">
-          © 2026 Varshika's Blog • Made with <span>💜</span> by Varshika
-        </p>
-      </div>
+    <footer>
+      <div class="footer-logo">Varshika.</div>
+      <p class="copyright">© 2026 Designed & Built with 💜 by Varshika.</p>
     </footer>
 
     <script src="script.js"></script>
+    
+    <!-- 3D Tilt Script Effect -->
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.blog-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -5; // Max 5deg rotation
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                } else {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                }
+            });
+        });
+    </script>
   </body>
 </html>
