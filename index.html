@@ -3,43 +3,97 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Varshika's Blog</title>
+    <meta
+      name="description"
+      content="Varshika's Blog - IITM BS Journey, Tech Insights, and Life Stories. Discover tips for IITM BS students, programming tutorials, and inspiring life experiences."
+    />
+    <meta
+      name="keywords"
+      content="IITM BS, IIT Madras, online degree, data science, programming, student life, tech blog"
+    />
+    <meta name="author" content="Varshika" />
+    <title>Varshika's Blog | IITM BS Journey & Tech Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="bg-animation"></div>
-    <header>
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <header id="header">
       <nav>
         <div class="logo">Varshika's Blog</div>
         <div class="nav-links">
           <a href="#">Home</a>
           <a href="#blogs">Blogs</a>
+          <a href="#about">About</a>
           <a href="editor.html" class="btn-editor">✏️ Write</a>
         </div>
       </nav>
     </header>
+
     <main>
       <section class="hero">
+        <div class="hero-badge">
+          <span>🎓</span> IITM BS Student | Tech Enthusiast | Blogger
+        </div>
         <h1>Welcome to <span>My Blog</span></h1>
-        <p>Stories, insights, and ideas that inspire</p>
+        <p>
+          Sharing my journey through IIT Madras BS program, tech explorations,
+          and life experiences. Let's learn and grow together!
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value" id="blogCount">10+</div>
+            <div class="stat-label">Blog Posts</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">500+</div>
+            <div class="stat-label">Readers</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">IITM</div>
+            <div class="stat-label">BS Journey</div>
+          </div>
+        </div>
       </section>
+
       <div class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Search blogs..." />
+        <input type="text" id="searchInput" placeholder="Search blogs..." />
       </div>
+
       <div class="categories" id="categoriesContainer">
-        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn active" data-category="all">✨ All</button>
       </div>
+
       <section class="blog-section" id="blogs">
-        <div class="blog-grid" id="blogGrid"></div>
+        <div class="blog-grid" id="blogGrid">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
       </section>
     </main>
+
     <div class="modal-overlay" id="blogModal">
+      <button class="modal-close" onclick="closeModal()">×</button>
       <div class="modal-content">
-        <button class="modal-close" onclick="closeModal()">×</button>
         <img class="modal-image" id="modalImage" src="" alt="" />
         <div class="modal-body">
           <span class="modal-category" id="modalCategory"></span>
@@ -49,7 +103,24 @@
         </div>
       </div>
     </div>
-    <footer><p>© 2026 Varshika's Blog 💜</p></footer>
+
+    <footer id="about">
+      <div class="footer-content">
+        <div class="footer-logo">Varshika's Blog</div>
+        <p class="footer-tagline">
+          Documenting my journey through IITM BS, one blog at a time 📝
+        </p>
+        <div class="footer-links">
+          <a href="#">Home</a>
+          <a href="#blogs">Blogs</a>
+          <a href="editor.html">Write</a>
+        </div>
+        <p class="footer-copyright">
+          © 2026 Varshika's Blog • Made with <span>💜</span> by Varshika
+        </p>
+      </div>
+    </footer>
+
     <script src="script.js"></script>
   </body>
 </html>
