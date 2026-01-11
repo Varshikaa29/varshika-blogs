@@ -105,5 +105,5 @@ Open `editor.html` to see the custom writing interface.
 
 <div align="center">
 <p>Thanks for visiting! Don't forget to leave a ⭐ star if you like the design!</p>
-<img src="https://www.google.com/search?q=https://media.giphy.com/media/UuB5lh1bL1Dl6svihe/giphy.gif" width="50">
+<!-- <img src="https://www.google.com/search?q=https://media.giphy.com/media/UuB5lh1bL1Dl6svihe/giphy.gif" width="50"> -->
 </div>
