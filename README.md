@@ -1,7 +1,5 @@
 # 🌸 Varshika Blogs ✨📝
 
-![Blog Banner](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
-
 Welcome to **Varshika Blogs** — a creative space where ideas, stories, and insights come alive 💡.  
 This project is a **personal blogging website** built with HTML/CSS/JS and hosted on **GitHub Pages** 🚀.
 
