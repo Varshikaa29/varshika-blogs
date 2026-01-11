@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Getting Started with Web Development",
+    "excerpt": "A comprehensive guide to beginning your journey in web development, covering HTML, CSS, and JavaScript fundamentals.",
+    "content": "<p>Web development is an exciting journey that opens doors to endless possibilities. Whether you're looking to build personal projects, start a career, or enhance existing skills, understanding the fundamentals is key.</p><h2>HTML - The Foundation</h2><p>HTML (HyperText Markup Language) is the backbone of any website. It provides the structure and content that browsers interpret to display web pages.</p><h2>CSS - The Styling</h2><p>CSS (Cascading Style Sheets) brings your HTML to life with colors, layouts, and animations. It's what makes websites visually appealing.</p><h2>JavaScript - The Interactivity</h2><p>JavaScript adds dynamic behavior to your websites. From form validation to complex applications, JS is essential for modern web development.</p><p>Start with these three technologies, and you'll have a solid foundation for your web development journey!</p>",
+    "author": "Varshika",
+    "date": "2026-01-10",
+    "category": "Technology",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80",
+    "readTime": "5 min read"
+  },
+  {
+    "id": 2,
+    "title": "The Art of Mindful Living",
+    "excerpt": "Discover how mindfulness practices can transform your daily life and bring peace to a chaotic world.",
+    "content": "<p>In today's fast-paced world, finding moments of peace can seem impossible. Yet, mindfulness offers a path to tranquility that anyone can walk.</p><h2>What is Mindfulness?</h2><p>Mindfulness is the practice of being fully present in the moment, aware of where we are and what we're doing, without being overly reactive to what's going on around us.</p><h2>Daily Practices</h2><p>Start with simple breathing exercises. Take five minutes each morning to focus solely on your breath. Notice the sensation of air entering and leaving your body.</p><h2>The Benefits</h2><p>Regular mindfulness practice has been shown to reduce stress, improve focus, enhance emotional regulation, and even boost immune function.</p><p>Begin your mindfulness journey today, one breath at a time.</p>",
+    "author": "Varshika",
+    "date": "2026-01-08",
+    "category": "Lifestyle",
+    "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80",
+    "readTime": "4 min read"
+  },
+  {
+    "id": 3,
+    "title": "Exploring the World of AI",
+    "excerpt": "An introduction to artificial intelligence and its impact on our daily lives and future possibilities.",
+    "content": "<p>Artificial Intelligence is no longer science fiction—it's our present reality. From virtual assistants to recommendation systems, AI shapes how we live and work.</p><h2>Understanding AI</h2><p>AI refers to computer systems that can perform tasks typically requiring human intelligence. This includes learning, reasoning, problem-solving, and understanding language.</p><h2>AI in Daily Life</h2><p>You interact with AI more than you might realize: smartphone assistants, email spam filters, navigation apps, and streaming recommendations all use AI technologies.</p><h2>The Future</h2><p>As AI continues to evolve, we can expect even more integration into healthcare, education, transportation, and creative fields. The possibilities are limitless.</p><p>Understanding AI basics prepares us for a future where human-AI collaboration becomes the norm.</p>",
+    "author": "Varshika",
+    "date": "2026-01-05",
+    "category": "Technology",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+    "readTime": "6 min read"
+  }
+]
